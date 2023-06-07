@@ -1,33 +1,34 @@
 import { BrowserRouter, Routes, NavLink, Route, Navigate } from "react-router-dom"
-import { LazyPage1, LazyPage2, LazyPage3 } from "../01-lazyload/pages"
+import { routes } from "./routes"
+import { Suspense } from "react"
 
 export const Navigation = () => {
   return (
-    <BrowserRouter>
-      <div className="main-layout">
-        <nav>
-          <img style={{ width: "100px" }} src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/270px-React-icon.svg.png" alt="nav-img" />
-          <ul>
-            <li>
-              <NavLink className={({ isActive }) => isActive ? "nav-active" : ""} to="/lazy1">Lazy 1</NavLink>
-            </li>
-            <li>
-              <NavLink className={({ isActive }) => isActive ? "nav-active" : ""} to="/lazy2">Lazy 2</NavLink>
-            </li>
-            <li>
-              <NavLink className={({ isActive }) => isActive ? "nav-active" : ""} to="/lazy3">Lazy 3</NavLink>
-            </li>
-          </ul>
-        </nav>
+    <Suspense>
+      <BrowserRouter>
+        <div className="main-layout">
+          <nav>
+            <img style={{ width: "100px" }} src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/270px-React-icon.svg.png" alt="nav-img" />
+            <ul>
+              {routes.map(({ to, name }) => (
+                <li key={name}>
+                  <NavLink className={({ isActive }) => isActive ? "nav-active" : ""} to={to}>
+                    {name}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-        <Routes>
-          <Route path="/lazy1" element={ <LazyPage1 /> } />
-          <Route path="/lazy2" element={ <LazyPage2 /> } />
-          <Route path="/lazy3" element={ <LazyPage3 /> } />
+          <Routes>
+            {routes.map(({ path, Component }) => (
+              <Route key={path} path={path} element={<Component />} />
+            ))}
 
-          <Route path="/*" element={<Navigate to="/lazy1" replace />}/>
-        </Routes>
-      </div>
-    </BrowserRouter>
+            <Route path="/*" element={<Navigate to={routes[0].to} replace />}/>
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </Suspense>
   )
 }
