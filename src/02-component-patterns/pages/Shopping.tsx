@@ -1,4 +1,5 @@
 import { ProductBtns, ProductCard, ProductImage, ProductTitle } from "../components"
+import '../styles/custom-styles.css'
 
 const product = {
   id: "1",
@@ -17,16 +18,33 @@ export const Shopping = () => {
           flexWrap: "wrap"
         }}
       >
-        <ProductCard product={product}>
+        <ProductCard
+          className="bg-dark"
+          product={product}
+        >
+          <ProductImage className="custom-image" />
+          <ProductTitle title="" className="text-white" activeClass="bold-text" />
+          <ProductBtns className="custom-buttons" />
+        </ProductCard>
+
+        <ProductCard
+          product={product}
+          className="bg-dark"
+        >
+          <ProductCard.Img className="custom-image" />
+          <ProductCard.Title title="" className="text-white" activeClass="bold-text" />
+          <ProductCard.Buttons className="custom-buttons" />
+        </ProductCard>
+
+        <ProductCard
+          product={product}
+          style={{
+            backgroundColor: "red"
+          }}
+        >
           <ProductImage />
           <ProductTitle title="" />
           <ProductBtns />
-        </ProductCard>
-
-        <ProductCard product={product}>
-          <ProductCard.Img />
-          <ProductCard.Title title="" />
-          <ProductCard.Buttons />
         </ProductCard>
       </div>
     </div>
