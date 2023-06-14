@@ -19,3 +19,12 @@ export interface IProductCardHOC {
   Img: (props: IProductImage) => JSX.Element
   Buttons: (props: IProductBtns) => JSX.Element
 }
+
+export interface onChangeArgs {
+  product: IProductCard
+  count: number
+}
+
+export interface IProductInCart extends IProductCard {
+  count: number
+}
