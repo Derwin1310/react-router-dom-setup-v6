@@ -10,13 +10,7 @@ interface IUseProduct {
 export const useProduct = ({ onChange, product, value = 0 }: IUseProduct) => {
   const [count, setCount] = useState(value)
 
-  const isControlled = useRef(!!onChange)
-
   const handleIncreaseBy = (value: number) => {
-    if (isControlled ) {
-      return onChange!({ count: value, product })
-    }
-
     const newValue = Math.max(count + value, 0)
 
     setCount(newValue)
