@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useCallback, useContext } from "react"
 import { ProductContext } from "./ProductCard"
 
 import styles from '../styles/styles.module.css'
@@ -8,7 +8,14 @@ export interface IProductBtns {
 }
 
 export const ProductBtns = ({ className }: IProductBtns) => {
-  const { handleIncreaseBy, count } = useContext(ProductContext)
+  //TODO: maxCount
+  const { handleIncreaseBy, count, maxCount } = useContext(ProductContext)
+
+  //TODO: isMaxReached = useCallback, [count, maxCount]
+  const isMaxReached = useCallback(() => maxCount && count === maxCount, [count, maxCount])
+
+  //TRUE if count === maxCount
+  //FALSE if not
 
   return (
     <div className={`${styles.buttonsContainer} ${className}`}>
@@ -23,7 +30,7 @@ export const ProductBtns = ({ className }: IProductBtns) => {
 
       <button
         onClick={() => handleIncreaseBy(1)}
-        className={styles.buttonAdd}
+        className={`${styles.buttonAdd} ${isMaxReached() ? styles.disabled : ""}`}
       >
         +
       </button>

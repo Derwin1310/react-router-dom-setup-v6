@@ -11,6 +11,7 @@ export interface IProductContext {
   count: number
   handleIncreaseBy: (value: number) => void
   product: IProductCard
+  maxCount?: number
 }
 
 export interface IProductCardHOC {
@@ -27,4 +28,19 @@ export interface onChangeArgs {
 
 export interface IProductInCart extends IProductCard {
   count: number
+}
+
+export interface InitialValues {
+  count?: number
+  maxCount?: number
+}
+
+export interface ProductCardHandlers {
+  count: number
+  isMaxCountReached: boolean
+  maxCount?: number
+  product: IProductCard
+
+  increaseBy: (value: number) => void
+  reset: () => void
 }
